@@ -18,13 +18,13 @@ $Id: tag.py 100555 2009-05-30 15:26:12Z srichter $
 """
 import sys
 import os
-import re
-import re2              # Use re2 if we get killed by exponential regex evaluation.
+import regex as re
+#import re2              # Use re2 if we get killed by exponential regex evaluation.
                         # This used to happen with an old TERM_SPEC regex,
                         # and now will generally timeout if there are 300 dots in a row.
                         # DOWNLOAD AT: https://github.com/axiak/pyre2
                         # (see Python bug http://bugs.python.org/issue1662581)
-re2.set_fallback_notification(re2.FALLBACK_WARNING)
+re.set_fallback_notification(re.FALLBACK_WARNING)
 
 # Timeout re requests
 from timeout import timeout, TimeoutError
@@ -41,7 +41,7 @@ TERM_SPEC = re.compile('([\W\d_]*)(([^\W\d_]?[-\.]?)*[^\W\d_])([\W\d_]*[^\W\d_]*
 # TERM_SPEC2 is faster (because it uses re2) but it DOESN'T handle Unicode
 # correctly (https://github.com/axiak/pyre2/issues/5). So only use re2 if
 # re times out.
-TERM_SPEC2 = re2.compile('([\W\d_]*)(([^\W\d_]?[-\.]?)*[^\W\d_])([\W\d_]*[^\W\d_]*)', re2.UNICODE)
+TERM_SPEC2 = re.compile('([\W\d_]*)(([^\W\d_]?[-\.]?)*[^\W\d_])([\W\d_]*[^\W\d_]*)', re.UNICODE)
 DATA_DIRECTORY = os.path.join(os.path.dirname(__file__), 'data')
 
 
@@ -143,7 +143,7 @@ class Tagger(object):
                 match = slow_match(term)
             except TimeoutError:
                 import sys
-                print >> sys.stderr, "TIMEOUT when running regex on %s (%s).\nRe-running with re2 (sorry if you have Unicode, this will tokenize it wrong)" % (term.encode("utf-8"), repr(term))
+                #print >> sys.stderr, "TIMEOUT when running regex on %s (%s).\nRe-running with re2 (sorry if you have Unicode, this will tokenize it wrong)" % (term.encode("utf-8"), repr(term))
                 match = TERM_SPEC2.search(term)
             if match is None:
                 terms.append(term)
