@@ -60,6 +60,7 @@ setup (
     install_requires = [
         'setuptools',
         'zope.interface',
+        'regex',
         ],
     zip_safe = False,
     )
