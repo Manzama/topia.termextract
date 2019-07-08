@@ -60,8 +60,8 @@ setup (
     install_requires = [
         'setuptools',
         'zope.interface',
-        'regex',
-        'timeout-decorator',
+        'regex==2019.6.8',
+        'timeout-decorator==0.4.1',
         ],
     zip_safe = False,
     )
