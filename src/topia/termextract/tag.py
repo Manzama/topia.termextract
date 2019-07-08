@@ -27,7 +27,8 @@ import regex as re
 #re.set_fallback_notification(re.FALLBACK_WARNING)
 
 # Timeout re requests
-from timeout import timeout, TimeoutError
+#from timeout import timeout, TimeoutError
+import timeout_decorator
 
 import zope.interface
 
@@ -136,12 +137,12 @@ class Tagger(object):
                 continue
             # Now, a word can be preceded or succeeded by symbols, so let's
             # split those out
-            @timeout(1)
+            @timeout_decorator.timeout(1)
             def slow_match(term):
                 return TERM_SPEC.search(term)
             try:
                 match = slow_match(term)
-            except TimeoutError:
+            except Exception:
                 #import sys
                 #print >> sys.stderr, "TIMEOUT when running regex on %s (%s).\nRe-running with re2 (sorry if you have Unicode, this will tokenize it wrong)" % (term.encode("utf-8"), repr(term))
                 #match = TERM_SPEC2.search(term)
