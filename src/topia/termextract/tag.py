@@ -24,7 +24,7 @@ import regex as re
                         # and now will generally timeout if there are 300 dots in a row.
                         # DOWNLOAD AT: https://github.com/axiak/pyre2
                         # (see Python bug http://bugs.python.org/issue1662581)
-re.set_fallback_notification(re.FALLBACK_WARNING)
+#re.set_fallback_notification(re.FALLBACK_WARNING)
 
 # Timeout re requests
 from timeout import timeout, TimeoutError
@@ -142,9 +142,10 @@ class Tagger(object):
             try:
                 match = slow_match(term)
             except TimeoutError:
-                import sys
+                #import sys
                 #print >> sys.stderr, "TIMEOUT when running regex on %s (%s).\nRe-running with re2 (sorry if you have Unicode, this will tokenize it wrong)" % (term.encode("utf-8"), repr(term))
-                match = TERM_SPEC2.search(term)
+                #match = TERM_SPEC2.search(term)
+                match = None
             if match is None:
                 terms.append(term)
                 split.append(True)
