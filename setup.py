@@ -61,7 +61,7 @@ setup (
         'setuptools',
         'zope.interface',
         'regex',
-        'timeout',
+        'timeout-decorator',
         ],
     zip_safe = False,
     )
